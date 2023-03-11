@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Mail;
+
+use App\Mail\DepositMail;
+
+use App\Mail\WithdrawalMail;
+
 
 use Hash;
 
@@ -100,9 +106,9 @@ class Admincontroller extends Controller
         $balance_amount=Auth::user()->balance;
         $deposit_money=$request->amount;
         $totalamount=$balance_amount+$deposit_money;
-        $user=User::find($id);
-        $user->balance=$totalamount;
-        $user->save();
+        $deposit=User::find($id);
+        $deposit->balance=$totalamount;
+        $deposit->save();
         $statement=new Statement;
         $statement->email=$email;
         $statement->amount=$deposit_money;
@@ -110,6 +116,7 @@ class Admincontroller extends Controller
         $statement->details='Deposit';
         $statement->balance=$totalamount;
         $statement->save();
+        Mail::to('jishnu@gmail.com')->send(new DepositMail($statement));
         return redirect()->back();
     }
     public function submitwithdrawal(Request $request)
@@ -120,9 +127,9 @@ class Admincontroller extends Controller
         $balance_amount=Auth::user()->balance;
         $withdrawal_money=$request->amount;
         $totalamount=$balance_amount-$withdrawal_money;
-        $user=User::find($id);
-        $user->balance=$totalamount;
-        $user->save();
+        $withdrawal=User::find($id);
+        $withdrawal->balance=$totalamount;
+        $withdrawal->save();
         $statement=new Statement;
         $statement->email=$email;
         $statement->amount=$withdrawal_money;
@@ -130,6 +137,7 @@ class Admincontroller extends Controller
         $statement->details='Withdrawal';
         $statement->balance=$totalamount;
         $statement->save();
+        Mail::to('jishnu@gmail.com')->send(new WithdrawalMail($statement));
         return redirect()->back();
     }
 }
