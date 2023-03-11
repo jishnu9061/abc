@@ -43,9 +43,3 @@ Route::any("submitregistration",[Admincontroller::class,'submitregistration']);
 Route::any("submitdeposit",[Admincontroller::class,'submitdeposit']);
 
 Route::any("submitwithdrawal",[Admincontroller::class,'submitwithdrawal']);
-
-
-
-
-
-

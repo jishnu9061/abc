@@ -10,7 +10,6 @@ use App\Mail\DepositMail;
 
 use App\Mail\WithdrawalMail;
 
-
 use Hash;
 
 use Session;
