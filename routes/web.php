@@ -18,7 +18,7 @@ use App\Http\Controllers\Admincontroller;
 */
 
 
-Route::get('/', function () {
+Route::any('/', function () {
     return view('login');
 });
 
