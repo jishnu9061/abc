@@ -116,7 +116,7 @@ class Admincontroller extends Controller
         $statement->balance=$totalamount;
         $statement->save();
         Mail::to('jishnu@gmail.com')->send(new DepositMail($statement));
-        return redirect()->back();
+        return redirect()->back()->with('message', 'succesfully deposited');
     }
     public function submitwithdrawal(Request $request)
     {
@@ -131,12 +131,17 @@ class Admincontroller extends Controller
         $withdrawal->save();
         $statement=new Statement;
         $statement->email=$email;
+        if(!$withdrawal_money>$balance_amount){
         $statement->amount=$withdrawal_money;
         $statement->type='Debit';
         $statement->details='Withdrawal';
         $statement->balance=$totalamount;
         $statement->save();
         Mail::to('jishnu@gmail.com')->send(new WithdrawalMail($statement));
-        return redirect()->back();
+        return redirect()->back()->with('message', 'succesfully withdrawed');
+        }
+        else{
+            return redirect()->back()->with('message', 'not info amount');
+        }
     }
 }

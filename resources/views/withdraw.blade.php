@@ -459,7 +459,7 @@
 </head>
 <body>
     <header role="banner">
-        <h1>Admin Panel</h1>
+        <h1>User Account</h1>
         <ul class="utilities">
           <br>
           <li class="users"><a href="#">My Account</a></li>
@@ -476,8 +476,15 @@
           <li class="comments"><a href="{{ url('statement') }}">Statement</a></li>
         </ul>
       </nav>
-      
       <main role="main">
+        <div>
+        @if(session()->has('message'))
+      <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+        {{ session()->get('message') }}
+        @endif
+      </div>
+      </div>
         <br>
         <form action="{{ url('submitwithdrawal') }}" method="POST">
           @csrf
